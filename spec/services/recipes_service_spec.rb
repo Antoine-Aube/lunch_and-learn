@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec. describe RecipesService do 
   let(:service) { RecipesService.new}
 
-  describe "#get_recipes" do
+  describe "#get_recipes", :vcr do
     it "returns a successfule response with correct json" do 
       query = "Vietnam"
       response = service.get_recipes(query)
