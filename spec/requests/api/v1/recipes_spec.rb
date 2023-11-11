@@ -26,6 +26,7 @@ RSpec.describe "recipes endpoints" do
       expect(single_recipe[:id]).to eq(nil)
       expect(single_recipe).to have_key(:type)
       expect(single_recipe[:type]).to be_a(String)
+      expect(single_recipe[:type]).to eq("recipe")
       expect(single_recipe).to have_key(:attributes)
       expect(single_recipe[:attributes]).to be_a(Hash)
 
