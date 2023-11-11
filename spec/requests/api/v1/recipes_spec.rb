@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "recipes endpoints", :vcr do 
-  describe "GET /api/v1/recipes" do
+RSpec.describe "recipes endpoints" do 
+  describe "GET /api/v1/recipes", :vcr do
     it "returns a successful response" do 
       get "/api/v1/recipes", params: {country: "Vietnam"}
 
@@ -66,6 +66,36 @@ RSpec.describe "recipes endpoints", :vcr do
   end
 
   describe "recipes endpoint with empty country parameter passed" do 
-    
+    it "return a recipe with all the recipe information" do
+      get "/api/v1/recipes?country"
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
+
+      response_body = JSON.parse(response.body, symbolize_names: true)
+      expect(response_body[:data]).to be_an(Array)
+      # require 'pry';binding.pry
+      expect(response_body[:data][0]).to be_a(Hash)
+
+      
+      single_recipe = response_body[:data][0]
+
+      expect(single_recipe).to have_key(:id)
+      expect(single_recipe[:id]).to eq(nil)
+      expect(single_recipe).to have_key(:type)
+      expect(single_recipe[:type]).to be_a(String)
+      expect(single_recipe).to have_key(:attributes)
+      expect(single_recipe[:attributes]).to be_a(Hash)
+
+      attributes = single_recipe[:attributes]
+
+      expect(attributes).to have_key(:title)
+      expect(attributes[:title]).to be_a(String)
+      expect(attributes).to have_key(:url)
+      expect(attributes[:url]).to be_a(String)
+      expect(attributes).to have_key(:country)
+      expect(attributes[:country]).to be_a(String)
+      expect(attributes).to have_key(:image)
+      expect(attributes[:image]).to be_a(String)
+    end 
   end
 end
