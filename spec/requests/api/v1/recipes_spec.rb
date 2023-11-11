@@ -64,4 +64,8 @@ RSpec.describe "recipes endpoints", :vcr do
       expect(response_body[:data]).to eq([])
     end
   end
+
+  describe "recipes endpoint with empty country parameter passed" do 
+    
+  end
 end
