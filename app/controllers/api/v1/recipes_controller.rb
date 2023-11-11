@@ -5,7 +5,7 @@ class Api::V1::RecipesController < ApplicationController
     if !recipes.empty?
       render json: RecipeSerializer.new(recipes)
     else
-      render json: {data: []}
+      render json: {data: []}, status: 404
     end
   end
 end
