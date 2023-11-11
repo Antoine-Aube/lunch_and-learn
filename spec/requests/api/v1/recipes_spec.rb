@@ -6,6 +6,10 @@ RSpec.describe "recipes endpoints" do
       get "/api/v1/recipes", params: {country: "Vietnam"}
 
       expect(response).to be_successful
+      expect(response.status).to eq(200)
+
+      parsed_response = JSON.parse(response.body, symbolize_names: true) 
+      require 'pry';binding.pry
     end
   end
 end
