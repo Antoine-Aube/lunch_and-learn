@@ -1,13 +1,24 @@
 class LearningResourceFacade
 
   def self.get_learning_resource(country)
-      video_response = VideoService.new.get_video(country)
-      video_response_body = JSON.parse(video_response.body, symbolize_names: true)
-      single_video = video_response_body[:items].sample || {}
-      image_response = ImageService.new.get_images(country)
-      image_response_body = JSON.parse(image_response.body, symbolize_names: true)
-      image_results = image_response_body[:results]
-      require 'pry';binding.pry
+      single_video = get_video(country)
+      image_results = get_image(country)
       resource = LearningResource.new(single_video, image_results, country)
   end  
+
+  def self.get_video(country)
+    video_response = VideoService.new.get_video(country)
+    parse_json(video_response)[:items].sample || {}
+  end
+
+  def self.get_image(country)
+    image_response = ImageService.new.get_images(country)
+    parse_json(image_response)[:results]
+  end
+
+  private
+
+  def self.parse_json(response)
+    JSON.parse(response.body, symbolize_names: true)
+  end
 end
