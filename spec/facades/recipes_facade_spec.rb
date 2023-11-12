@@ -4,7 +4,7 @@ RSpec.describe RecipesFacade do
   let(:facade) { RecipesFacade }
 
   describe "#get_recipes" do 
-    it "returns an array of Recipe ojects" do 
+    it "returns an array of Recipe ojects", :vcr do 
       query = "Vietnam"
       response = facade.get_recipes(query)
 

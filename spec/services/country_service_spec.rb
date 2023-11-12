@@ -12,6 +12,4 @@ RSpec.describe CountryService do
       expect(response_body[0]).to be_a(Hash)
     end
   end
-
-
 end
