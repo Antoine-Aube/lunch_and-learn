@@ -67,7 +67,7 @@ RSpec.describe "recipes endpoints" do
 
   describe "recipes endpoint with empty country parameter passed" do 
     it "return a recipe with all the recipe information" do
-      get "/api/v1/recipes?country"
+      get "/api/v1/recipes?country=japan"
       expect(response).to be_successful
       expect(response.status).to eq(200)
 
