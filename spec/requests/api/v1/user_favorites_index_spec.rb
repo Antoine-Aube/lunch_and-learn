@@ -42,11 +42,23 @@ RSpec.describe "User Favorites Index endpoint" do
 
         expect(response).to_not be_successful
         expect(response.status).to eq(404)
-        
+
         parsed_response = JSON.parse(response.body, symbolize_names: true)
 
         expect(parsed_response).to have_key(:error)
         expect(parsed_response[:error]).to eq("Invalid API key")
+      end
+
+      it "returns a message if the user has no favorites" do 
+        user = User.create(name: "test", email: "test@test.com", password: "test")
+        get "/api/v1/favorites", params: {api_key: user.api_key}
+
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+        parsed_response = JSON.parse(response.body, symbolize_names: true)
+  
+        expect(parsed_response).to have_key(:message)
+        expect(parsed_response[:message]).to eq("This user has no saved favorites")
       end
     end
   end
