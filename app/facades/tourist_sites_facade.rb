@@ -1,7 +1,7 @@
 class TouristSitesFacade
   def self.get_tourist_sites(country)
     coordinates = get_capital_coordinates(country)
-    response = PlacesService.new.get_tourist_sites(coordinates)
+    response = places_service(coordinates)
     response_body = parse_json(response)
     if response_body[:features].empty?
       return nil
@@ -13,14 +13,18 @@ class TouristSitesFacade
   end
 
   def self.get_capital_coordinates(country)
-    response = CountryService.new.capital_coordinates(country)
+    response = country_service(country)
     response_body = parse_json(response)
     country_info = response_body.first
-    if country_info[:capitalInfo].empty?
-      [0,0]
-    else 
-      country_info[:capitalInfo][:latlng]
-    end
+    country_info[:capitalInfo].empty? ? [0,0] : country_info[:capitalInfo][:latlng]
+  end
+
+  def self.places_service(coordinates)
+    PlacesService.new.get_tourist_sites(coordinates)
+  end
+
+  def self.country_service(country)
+    CountryService.new.capital_coordinates(country)
   end
 
   private
