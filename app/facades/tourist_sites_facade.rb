@@ -3,7 +3,6 @@ class TouristSitesFacade
     coordinates = get_capital_coordinates(country)
     response = PlacesService.new.get_tourist_sites(coordinates)
     response_body = JSON.parse(response.body, symbolize_names: true)
-    require 'pry';binding.pry
     if response_body[:features].empty?
       return nil
     else
