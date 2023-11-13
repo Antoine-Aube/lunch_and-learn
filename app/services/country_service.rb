@@ -3,6 +3,10 @@ class CountryService
     conn.get("/v3.1/all")
   end
 
+  def capital_coordinates(country)
+    conn.get("/v3.1/name/#{country}")
+  end
+
 private
 
   def conn 
